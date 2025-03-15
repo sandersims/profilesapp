@@ -14,7 +14,7 @@ import { generateClient } from "aws-amplify/data";
 import outputs from "../amplify_outputs.json";
 import CsvUploader from './CsvUploader';
 import { createIncomeData } from './graphql/mutations';
-import { API } from '@aws-amplify/api-graphql';
+import { API as GraphQLAPI } from '@aws-amplify/api-graphql';
 import awsconfig from './aws-exports';
 /**
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
@@ -24,7 +24,7 @@ Amplify.configure({
   ...awsconfig,
   ...outputs,
   API: {
-    plugins: [API],
+    plugins: [GraphQLAPI],
     GraphQL: {
       endpoint: awsconfig.aws_appsync_graphqlEndpoint,
       region: awsconfig.aws_appsync_region,
