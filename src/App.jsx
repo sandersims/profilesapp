@@ -20,15 +20,16 @@ import awsconfig from './aws-exports';
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
 
-Amplify.configure(awsconfig, {
+Amplify.configure({
+  ...awsconfig,
   ...outputs,
   API: {
     plugins: [API],
     GraphQL: {
-      endpoint: 'https://o2eeswvizzgfvms42acybo5nmi.appsync-api.eu-north-1.amazonaws.com/graphql',
-      region: 'eu-north-1',
+      endpoint: awsconfig.aws_appsync_graphqlEndpoint,
+      region: awsconfig.aws_appsync_region,
       defaultAuthMode: 'apiKey',
-      apiKey: 'da2-ifq64*********************'
+      apiKey: awsconfig.aws_appsync_apiKey,
     }
   }
 });
