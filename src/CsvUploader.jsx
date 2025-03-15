@@ -1,7 +1,13 @@
 import React from 'react';
 import Papa from 'papaparse';
-import { API, graphqlOperation } from 'aws-amplify';
+import { graphqlOperation } from 'aws-amplify';
 import { createIncomeData } from './graphql/mutations';
+
+let API;
+(async () => {
+  const mod = await import('@aws-amplify/api-graphql');
+  API = mod.API;
+})();
 
 export default function CsvUploader() {
   const handleFileUpload = (event) => {
