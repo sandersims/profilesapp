@@ -11,6 +11,20 @@ const schema = a
       .authorization((allow) => [
         allow.ownerDefinedIn("profileOwner"),
       ]),
+
+      IncomeData: a
+        .model({
+          institution: a.string(),
+          structuralUnit: a.string(),
+          position: a.string(),
+          firstName: a.string(),
+          lastName: a.string(),
+          workload: a.float(),
+          salary: a.integer(),
+        })
+        .authorization((allow) => [
+          allow.ownerDefinedIn("profileOwner"),
+        ]),
   })
   .authorization((allow) => [allow.resource(postConfirmation)]);
 export type Schema = ClientSchema<typeof schema>;
