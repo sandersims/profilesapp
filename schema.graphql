@@ -1,0 +1,339 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type IncomeData @aws_cognito_user_pools @aws_iam {
+  createdAt: AWSDateTime!
+  firstName: String
+  id: ID!
+  institution: String
+  lastName: String
+  position: String
+  profileOwner: String
+  salary: Int
+  structuralUnit: String
+  updatedAt: AWSDateTime!
+  workload: Float
+}
+
+type ModelIncomeDataConnection @aws_cognito_user_pools @aws_iam {
+  items: [IncomeData]!
+  nextToken: String
+}
+
+type ModelUserProfileConnection @aws_cognito_user_pools @aws_iam {
+  items: [UserProfile]!
+  nextToken: String
+}
+
+type Mutation {
+  createIncomeData(condition: ModelIncomeDataConditionInput, input: CreateIncomeDataInput!): IncomeData @aws_cognito_user_pools @aws_iam
+  createUserProfile(condition: ModelUserProfileConditionInput, input: CreateUserProfileInput!): UserProfile @aws_cognito_user_pools @aws_iam
+  deleteIncomeData(condition: ModelIncomeDataConditionInput, input: DeleteIncomeDataInput!): IncomeData @aws_cognito_user_pools @aws_iam
+  deleteUserProfile(condition: ModelUserProfileConditionInput, input: DeleteUserProfileInput!): UserProfile @aws_cognito_user_pools @aws_iam
+  updateIncomeData(condition: ModelIncomeDataConditionInput, input: UpdateIncomeDataInput!): IncomeData @aws_cognito_user_pools @aws_iam
+  updateUserProfile(condition: ModelUserProfileConditionInput, input: UpdateUserProfileInput!): UserProfile @aws_cognito_user_pools @aws_iam
+}
+
+type Query {
+  getIncomeData(id: ID!): IncomeData @aws_cognito_user_pools @aws_iam
+  getUserProfile(id: ID!): UserProfile @aws_cognito_user_pools @aws_iam
+  listIncomeData(filter: ModelIncomeDataFilterInput, limit: Int, nextToken: String): ModelIncomeDataConnection @aws_cognito_user_pools @aws_iam
+  listUserProfiles(filter: ModelUserProfileFilterInput, limit: Int, nextToken: String): ModelUserProfileConnection @aws_cognito_user_pools @aws_iam
+}
+
+type Subscription {
+  onCreateIncomeData(filter: ModelSubscriptionIncomeDataFilterInput, profileOwner: String): IncomeData @aws_cognito_user_pools @aws_iam @aws_subscribe(mutations : ["createIncomeData"])
+  onCreateUserProfile(filter: ModelSubscriptionUserProfileFilterInput, profileOwner: String): UserProfile @aws_cognito_user_pools @aws_iam @aws_subscribe(mutations : ["createUserProfile"])
+  onDeleteIncomeData(filter: ModelSubscriptionIncomeDataFilterInput, profileOwner: String): IncomeData @aws_cognito_user_pools @aws_iam @aws_subscribe(mutations : ["deleteIncomeData"])
+  onDeleteUserProfile(filter: ModelSubscriptionUserProfileFilterInput, profileOwner: String): UserProfile @aws_cognito_user_pools @aws_iam @aws_subscribe(mutations : ["deleteUserProfile"])
+  onUpdateIncomeData(filter: ModelSubscriptionIncomeDataFilterInput, profileOwner: String): IncomeData @aws_cognito_user_pools @aws_iam @aws_subscribe(mutations : ["updateIncomeData"])
+  onUpdateUserProfile(filter: ModelSubscriptionUserProfileFilterInput, profileOwner: String): UserProfile @aws_cognito_user_pools @aws_iam @aws_subscribe(mutations : ["updateUserProfile"])
+}
+
+type UserProfile @aws_cognito_user_pools @aws_iam {
+  createdAt: AWSDateTime!
+  email: String
+  id: ID!
+  profileOwner: String
+  updatedAt: AWSDateTime!
+}
+
+enum ModelAttributeTypes {
+  _null
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+input AmplifyAIConversationTurnErrorInput {
+  errorType: String!
+  message: String!
+}
+
+input CreateIncomeDataInput {
+  firstName: String
+  id: ID
+  institution: String
+  lastName: String
+  position: String
+  salary: Int
+  structuralUnit: String
+  workload: Float
+}
+
+input CreateUserProfileInput {
+  email: String
+  id: ID
+  profileOwner: String
+}
+
+input DeleteIncomeDataInput {
+  id: ID!
+}
+
+input DeleteUserProfileInput {
+  id: ID!
+}
+
+input ModelBooleanInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  eq: Boolean
+  ne: Boolean
+}
+
+input ModelFloatInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+}
+
+input ModelIDInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  size: ModelSizeInput
+}
+
+input ModelIncomeDataConditionInput {
+  and: [ModelIncomeDataConditionInput]
+  createdAt: ModelStringInput
+  firstName: ModelStringInput
+  institution: ModelStringInput
+  lastName: ModelStringInput
+  not: ModelIncomeDataConditionInput
+  or: [ModelIncomeDataConditionInput]
+  position: ModelStringInput
+  profileOwner: ModelStringInput
+  salary: ModelIntInput
+  structuralUnit: ModelStringInput
+  updatedAt: ModelStringInput
+  workload: ModelFloatInput
+}
+
+input ModelIncomeDataFilterInput {
+  and: [ModelIncomeDataFilterInput]
+  createdAt: ModelStringInput
+  firstName: ModelStringInput
+  id: ModelIDInput
+  institution: ModelStringInput
+  lastName: ModelStringInput
+  not: ModelIncomeDataFilterInput
+  or: [ModelIncomeDataFilterInput]
+  position: ModelStringInput
+  profileOwner: ModelStringInput
+  salary: ModelIntInput
+  structuralUnit: ModelStringInput
+  updatedAt: ModelStringInput
+  workload: ModelFloatInput
+}
+
+input ModelIntInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelSizeInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+}
+
+input ModelStringInput {
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionBooleanInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input ModelSubscriptionFloatInput {
+  between: [Float]
+  eq: Float
+  ge: Float
+  gt: Float
+  in: [Float]
+  le: Float
+  lt: Float
+  ne: Float
+  notIn: [Float]
+}
+
+input ModelSubscriptionIDInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  in: [ID]
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+  notIn: [ID]
+}
+
+input ModelSubscriptionIncomeDataFilterInput {
+  and: [ModelSubscriptionIncomeDataFilterInput]
+  createdAt: ModelSubscriptionStringInput
+  firstName: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  institution: ModelSubscriptionStringInput
+  lastName: ModelSubscriptionStringInput
+  or: [ModelSubscriptionIncomeDataFilterInput]
+  position: ModelSubscriptionStringInput
+  profileOwner: ModelStringInput
+  salary: ModelSubscriptionIntInput
+  structuralUnit: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  workload: ModelSubscriptionFloatInput
+}
+
+input ModelSubscriptionIntInput {
+  between: [Int]
+  eq: Int
+  ge: Int
+  gt: Int
+  in: [Int]
+  le: Int
+  lt: Int
+  ne: Int
+  notIn: [Int]
+}
+
+input ModelSubscriptionStringInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  in: [String]
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+  notIn: [String]
+}
+
+input ModelSubscriptionUserProfileFilterInput {
+  and: [ModelSubscriptionUserProfileFilterInput]
+  createdAt: ModelSubscriptionStringInput
+  email: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  or: [ModelSubscriptionUserProfileFilterInput]
+  profileOwner: ModelStringInput
+  updatedAt: ModelSubscriptionStringInput
+}
+
+input ModelUserProfileConditionInput {
+  and: [ModelUserProfileConditionInput]
+  createdAt: ModelStringInput
+  email: ModelStringInput
+  not: ModelUserProfileConditionInput
+  or: [ModelUserProfileConditionInput]
+  profileOwner: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input ModelUserProfileFilterInput {
+  and: [ModelUserProfileFilterInput]
+  createdAt: ModelStringInput
+  email: ModelStringInput
+  id: ModelIDInput
+  not: ModelUserProfileFilterInput
+  or: [ModelUserProfileFilterInput]
+  profileOwner: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input UpdateIncomeDataInput {
+  firstName: String
+  id: ID!
+  institution: String
+  lastName: String
+  position: String
+  salary: Int
+  structuralUnit: String
+  workload: Float
+}
+
+input UpdateUserProfileInput {
+  email: String
+  id: ID!
+  profileOwner: String
+}
