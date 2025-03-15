@@ -1,6 +1,6 @@
 import React from 'react';
 import Papa from 'papaparse';
-import { API, graphqlOperation } from 'aws-amplify/api-graphql'; 
+import { API, graphqlOperation } from 'aws-amplify/api-graphql';
 import { createIncomeData } from './graphql/mutations';
 
 export default function CsvUploader() {
