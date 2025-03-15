@@ -13,7 +13,7 @@ import "@aws-amplify/ui-react/styles.css";
 import { generateClient } from "aws-amplify/data";
 import outputs from "../amplify_outputs.json";
 import CsvUploader from './CsvUploader';
-import { createOfficial } from '../graphql/mutations';
+import { createIncomeData } from './graphql/mutations';
 /**
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
