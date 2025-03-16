@@ -28,9 +28,24 @@ const client = generateClient();
 export default function App() {
   const [userprofiles, setUserProfiles] = useState([]);
   const { signOut } = useAuthenticator((context) => [context.user]);
+  const [officials, setIncomeData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchUserProfile();
+    const fetchOfficials = async () => {
+      try {
+        const result = await API.graphql(graphqlOperation(listIncomeData));
+        const items = result.data.listIncomeData.items;
+        setIncomeData(items);
+      } catch (error) {
+        console.error('Error fetching officials:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOfficials();
   }, []);
 
   async function fetchUserProfile() {
@@ -51,7 +66,7 @@ export default function App() {
 
       <Divider />
       {/*<CsvUploader />*/}
-      <DataTable data={officials} />
+      <DataTable data={officials} />;
 
       <Grid
         margin="3rem 0"
