@@ -25,6 +25,23 @@ Amplify.configure({ ...awsconfig, ...outputs });
 
 const client = generateClient();
 
+const listIncomeDataQuery = /* GraphQL */ `
+  query ListIncomeData {
+    listIncomeData {
+      items {
+        id
+        institution
+        structuralUnit
+        position
+        firstName
+        lastName
+        workload
+        basicSalary
+      }
+    }
+  }
+`;
+
 export default function App() {
   const [userprofiles, setUserProfiles] = useState([]);
   const { signOut } = useAuthenticator((context) => [context.user]);
@@ -35,7 +52,7 @@ export default function App() {
     fetchUserProfile();
     const fetchOfficials = async () => {
       try {
-        const result = await API.graphql(graphqlOperation(listIncomeData));
+        const result = await API.graphql(graphqlOperation(listIncomeDataQuery));
         const items = result.data.listIncomeData.items;
         setIncomeData(items);
       } catch (error) {
