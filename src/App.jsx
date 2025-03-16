@@ -7,7 +7,7 @@ import {
   Grid,
   Divider,
 } from "@aws-amplify/ui-react";
-import { useAuthenticator } from "@aws-amplify/ui-react";
+//import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 import { generateClient } from "aws-amplify/data";
@@ -24,7 +24,7 @@ const client = generateClient();
 
 export default function App() {
   const [userprofiles, setUserProfiles] = useState([]);
-  const { signOut } = useAuthenticator((context) => [context.user]);
+  //const { signOut } = useAuthenticator((context) => [context.user]);
   const [officials, setIncomeData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -89,7 +89,6 @@ export default function App() {
           </Flex>
         ))}
       </Grid>
-      <Button onClick={signOut}>Sign Out</Button>
     </Flex>
     
   );
