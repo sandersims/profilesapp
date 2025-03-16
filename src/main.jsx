@@ -10,8 +10,6 @@ Amplify.configure(awsExports);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Authenticator>
-      <App />
-    </Authenticator>
+    <App />
   </React.StrictMode>
 );
