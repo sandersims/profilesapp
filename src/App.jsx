@@ -15,8 +15,6 @@ import outputs from "../amplify_outputs.json";
 {/*import CsvUploader from './CsvUploader';*/}
 import awsconfig from './aws-exports';
 import DataTable from './DataTable';
-import { API, graphqlOperation } from 'aws-amplify';
-import { listIncomeData } from './graphql/queries';
 /**
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
@@ -24,23 +22,6 @@ import { listIncomeData } from './graphql/queries';
 Amplify.configure({ ...awsconfig, ...outputs });
 
 const client = generateClient();
-
-const listIncomeDataQuery = /* GraphQL */ `
-  query ListIncomeData {
-    listIncomeData {
-      items {
-        id
-        institution
-        structuralUnit
-        position
-        firstName
-        lastName
-        workload
-        basicSalary
-      }
-    }
-  }
-`;
 
 export default function App() {
   const [userprofiles, setUserProfiles] = useState([]);
@@ -50,24 +31,23 @@ export default function App() {
 
   useEffect(() => {
     fetchUserProfile();
-    const fetchOfficials = async () => {
-      try {
-        const result = await API.graphql(graphqlOperation(listIncomeDataQuery));
-        const items = result.data.listIncomeData.items;
-        setIncomeData(items);
-      } catch (error) {
-        console.error('Error fetching officials:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOfficials();
+    fetchIncomeData();
   }, []);
 
   async function fetchUserProfile() {
     const { data: profiles } = await client.models.UserProfile.list();
     setUserProfiles(profiles);
+  }
+
+  async function fetchIncomeData() {
+    try {
+      const { data } = await client.models.IncomeData.list();
+      setIncomeData(data);
+    } catch (error) {
+      console.error('Error fetching IncomeData:', error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -83,7 +63,7 @@ export default function App() {
 
       <Divider />
       {/*<CsvUploader />*/}
-      <DataTable data={officials} />;
+      <DataTable data={officials} />
 
       <Grid
         margin="3rem 0"
