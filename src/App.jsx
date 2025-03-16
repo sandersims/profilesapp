@@ -16,7 +16,7 @@ import outputs from "../amplify_outputs.json";
 import awsconfig from './aws-exports';
 import DataTable from './DataTable';
 import { API, graphqlOperation } from 'aws-amplify';
-import { listIncomeData } from '../graphql/queries';
+import { listIncomeData } from './graphql/queries';
 /**
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
