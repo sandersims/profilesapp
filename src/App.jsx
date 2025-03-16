@@ -20,19 +20,9 @@ import awsconfig from './aws-exports';
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
 
-Amplify.configure({
-  ...awsconfig,
-  ...outputs,
-  API: {
-    plugins: [GraphQLAPI],
-    GraphQL: {
-      endpoint: awsconfig.aws_appsync_graphqlEndpoint,
-      region: awsconfig.aws_appsync_region,
-      defaultAuthMode: 'apiKey',
-      apiKey: awsconfig.aws_appsync_apiKey,
-    }
-  }
-});
+Amplify.configure({ ...awsconfig, ...outputs });
+
+const client = generateClient();
 
 export default function App() {
   const [userprofiles, setUserProfiles] = useState([]);
