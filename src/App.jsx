@@ -12,8 +12,11 @@ import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 import { generateClient } from "aws-amplify/data";
 import outputs from "../amplify_outputs.json";
-import CsvUploader from './CsvUploader';
+{/*import CsvUploader from './CsvUploader';*/}
 import awsconfig from './aws-exports';
+import DataTable from './DataTable';
+import { API, graphqlOperation } from 'aws-amplify';
+import { listIncomeData } from '../graphql/queries';
 /**
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
@@ -47,7 +50,8 @@ export default function App() {
       <Heading level={1}>My Profile</Heading>
 
       <Divider />
-      <CsvUploader />
+      {/*<CsvUploader />*/}
+      <DataTable data={officials} />
 
       <Grid
         margin="3rem 0"
