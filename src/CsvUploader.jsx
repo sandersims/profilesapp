@@ -1,9 +1,7 @@
 import React from 'react';
 import Papa from 'papaparse';
-import { graphqlOperation } from 'aws-amplify';
-import { API as GraphQLAPI } from '@aws-amplify/api-graphql';
+import { API, graphqlOperation } from 'aws-amplify';
 import { createIncomeData } from './graphql/mutations';
-
 
 export default function CsvUploader() {
   const handleFileUpload = (event) => {
@@ -27,7 +25,7 @@ export default function CsvUploader() {
           };
 
           try {
-            await GraphQLAPI.graphql(graphqlOperation(createIncomeData, { input }))
+            await API.graphql(graphqlOperation(createIncomeData, { input }));
             console.log("Uploaded:", input);
           } catch (err) {
             console.error("Upload failed for:", input, err);
