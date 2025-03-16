@@ -18,7 +18,7 @@ import DataTable from './DataTable';
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
 
-Amplify.configure(awsconfig);
+//Amplify.configure(awsconfig);
 
 const client = generateClient();
 
