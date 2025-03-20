@@ -4,28 +4,15 @@
 export const getIncomeData = /* GraphQL */ `
   query GetIncomeData($id: ID!) {
     getIncomeData(id: $id) {
-      createdAt
-      firstName
       id
-      institution
+      firstName
       lastName
       position
-      profileOwner
-      salary
+      institution
       structuralUnit
-      updatedAt
+      salary
       workload
-      __typename
-    }
-  }
-`;
-export const getUserProfile = /* GraphQL */ `
-  query GetUserProfile($id: ID!) {
-    getUserProfile(id: $id) {
       createdAt
-      email
-      id
-      profileOwner
       updatedAt
       __typename
     }
@@ -39,20 +26,31 @@ export const listIncomeData = /* GraphQL */ `
   ) {
     listIncomeData(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        createdAt
-        firstName
         id
-        institution
+        firstName
         lastName
         position
-        profileOwner
-        salary
+        institution
         structuralUnit
-        updatedAt
+        salary
         workload
+        createdAt
+        updatedAt
         __typename
       }
       nextToken
+      __typename
+    }
+  }
+`;
+export const getUserProfile = /* GraphQL */ `
+  query GetUserProfile($id: ID!) {
+    getUserProfile(id: $id) {
+      id
+      email
+      profileOwner
+      createdAt
+      updatedAt
       __typename
     }
   }
@@ -65,10 +63,10 @@ export const listUserProfiles = /* GraphQL */ `
   ) {
     listUserProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        createdAt
-        email
         id
+        email
         profileOwner
+        createdAt
         updatedAt
         __typename
       }

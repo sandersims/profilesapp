@@ -1,30 +1,17 @@
-import { React, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
-  Button,
   Heading,
   Flex,
   View,
   Grid,
   Divider,
 } from "@aws-amplify/ui-react";
-//import { useAuthenticator } from "@aws-amplify/ui-react";
-import { Amplify } from "aws-amplify";
-import "@aws-amplify/ui-react/styles.css";
-import { generateClient } from "aws-amplify/data";
-{/*import CsvUploader from './CsvUploader';*/}
-import awsconfig from './aws-exports';
-import DataTable from './DataTable';
-/**
- * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
- */
-
-//Amplify.configure(awsconfig);
-
-const client = generateClient();
+import { listIncomeData, listUserProfiles } from "./graphql/queries";
+import { client } from "./client"; // ✅ your generated client
+import DataTable from "./DataTable";
 
 export default function App() {
   const [userprofiles, setUserProfiles] = useState([]);
-  //const { signOut } = useAuthenticator((context) => [context.user]);
   const [officials, setIncomeData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,16 +21,24 @@ export default function App() {
   }, []);
 
   async function fetchUserProfile() {
-    const { data: profiles } = await client.models.UserProfile.list();
-    setUserProfiles(profiles);
+    try {
+      const result = await client.graphql({ query: listUserProfiles });
+      const profiles = result.data?.listUserProfiles?.items || [];
+      console.log("Fetched UserProfiles:", profiles);
+      setUserProfiles(profiles);
+    } catch (error) {
+      console.error("Error fetching UserProfiles:", error);
+    }
   }
 
   async function fetchIncomeData() {
     try {
-      const { data } = await client.models.IncomeData.list();
+      const result = await client.graphql({ query: listIncomeData });
+      const data = result.data?.listIncomeData?.items || [];
+      console.log("Fetched IncomeData:", data);
       setIncomeData(data);
     } catch (error) {
-      console.error('Error fetching IncomeData:', error);
+      console.error("Error fetching IncomeData:", error);
     } finally {
       setLoading(false);
     }
@@ -61,7 +56,6 @@ export default function App() {
       <Heading level={1}>My Profile</Heading>
 
       <Divider />
-      {/*<CsvUploader />*/}
       <DataTable data={officials} />
 
       <Grid
@@ -90,6 +84,5 @@ export default function App() {
         ))}
       </Grid>
     </Flex>
-    
   );
 }

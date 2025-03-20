@@ -3,71 +3,19 @@
 
 export const createIncomeData = /* GraphQL */ `
   mutation CreateIncomeData(
-    $condition: ModelIncomeDataConditionInput
     $input: CreateIncomeDataInput!
-  ) {
-    createIncomeData(condition: $condition, input: $input) {
-      createdAt
-      firstName
-      id
-      institution
-      lastName
-      position
-      profileOwner
-      salary
-      structuralUnit
-      updatedAt
-      workload
-      __typename
-    }
-  }
-`;
-export const createUserProfile = /* GraphQL */ `
-  mutation CreateUserProfile(
-    $condition: ModelUserProfileConditionInput
-    $input: CreateUserProfileInput!
-  ) {
-    createUserProfile(condition: $condition, input: $input) {
-      createdAt
-      email
-      id
-      profileOwner
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const deleteIncomeData = /* GraphQL */ `
-  mutation DeleteIncomeData(
     $condition: ModelIncomeDataConditionInput
-    $input: DeleteIncomeDataInput!
   ) {
-    deleteIncomeData(condition: $condition, input: $input) {
-      createdAt
-      firstName
+    createIncomeData(input: $input, condition: $condition) {
       id
-      institution
+      firstName
       lastName
       position
-      profileOwner
-      salary
+      institution
       structuralUnit
-      updatedAt
+      salary
       workload
-      __typename
-    }
-  }
-`;
-export const deleteUserProfile = /* GraphQL */ `
-  mutation DeleteUserProfile(
-    $condition: ModelUserProfileConditionInput
-    $input: DeleteUserProfileInput!
-  ) {
-    deleteUserProfile(condition: $condition, input: $input) {
       createdAt
-      email
-      id
-      profileOwner
       updatedAt
       __typename
     }
@@ -75,35 +23,84 @@ export const deleteUserProfile = /* GraphQL */ `
 `;
 export const updateIncomeData = /* GraphQL */ `
   mutation UpdateIncomeData(
-    $condition: ModelIncomeDataConditionInput
     $input: UpdateIncomeDataInput!
+    $condition: ModelIncomeDataConditionInput
   ) {
-    updateIncomeData(condition: $condition, input: $input) {
-      createdAt
-      firstName
+    updateIncomeData(input: $input, condition: $condition) {
       id
-      institution
+      firstName
       lastName
       position
-      profileOwner
-      salary
+      institution
       structuralUnit
-      updatedAt
+      salary
       workload
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteIncomeData = /* GraphQL */ `
+  mutation DeleteIncomeData(
+    $input: DeleteIncomeDataInput!
+    $condition: ModelIncomeDataConditionInput
+  ) {
+    deleteIncomeData(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      position
+      institution
+      structuralUnit
+      salary
+      workload
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const createUserProfile = /* GraphQL */ `
+  mutation CreateUserProfile(
+    $input: CreateUserProfileInput!
+    $condition: ModelUserProfileConditionInput
+  ) {
+    createUserProfile(input: $input, condition: $condition) {
+      id
+      email
+      profileOwner
+      createdAt
+      updatedAt
       __typename
     }
   }
 `;
 export const updateUserProfile = /* GraphQL */ `
   mutation UpdateUserProfile(
-    $condition: ModelUserProfileConditionInput
     $input: UpdateUserProfileInput!
+    $condition: ModelUserProfileConditionInput
   ) {
-    updateUserProfile(condition: $condition, input: $input) {
-      createdAt
-      email
+    updateUserProfile(input: $input, condition: $condition) {
       id
+      email
       profileOwner
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteUserProfile = /* GraphQL */ `
+  mutation DeleteUserProfile(
+    $input: DeleteUserProfileInput!
+    $condition: ModelUserProfileConditionInput
+  ) {
+    deleteUserProfile(input: $input, condition: $condition) {
+      id
+      email
+      profileOwner
+      createdAt
       updatedAt
       __typename
     }

@@ -1,0 +1,16 @@
+type IncomeData @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  firstName: String
+  lastName: String
+  position: String
+  institution: String
+  structuralUnit: String
+  salary: Int
+  workload: Float
+}
+
+type UserProfile @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  email: String
+  profileOwner: String
+}
