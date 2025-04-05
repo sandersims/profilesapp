@@ -53,7 +53,7 @@ export default function App() {
       width="70%"
       margin="0 auto"
     >
-      <Heading level={1}>My Profile</Heading>
+      <Heading level={1}>Ametnike palgaandmed</Heading>
 
       <Divider />
       <DataTable data={officials} />
