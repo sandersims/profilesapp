@@ -6,8 +6,6 @@ import {
   Grid,
   Divider,
 } from "@aws-amplify/ui-react";
-import { listIncomeData, listUserProfiles } from "./graphql/queries";
-import { client } from "./client"; // ✅ your generated client
 import DataTable from "./DataTable";
 
 export default function App() {
@@ -16,11 +14,11 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchUserProfile();
+    //fetchUserProfile();
     fetchIncomeData();
   }, []);
 
-  async function fetchUserProfile() {
+  /*async function fetchUserProfile() {
     try {
       const result = await client.graphql({ query: listUserProfiles });
       const profiles = result.data?.listUserProfiles?.items || [];
@@ -29,12 +27,12 @@ export default function App() {
     } catch (error) {
       console.error("Error fetching UserProfiles:", error);
     }
-  }
+  }*/
 
   async function fetchIncomeData() {
     try {
-      const result = await client.graphql({ query: listIncomeData });
-      const data = result.data?.listIncomeData?.items || [];
+      const response = await fetch("https://j12f80h5b9.execute-api.eu-north-1.amazonaws.com/dev/income");
+      const data = await response.json();
       console.log("Fetched IncomeData:", data);
       setIncomeData(data);
     } catch (error) {
@@ -43,7 +41,7 @@ export default function App() {
       setLoading(false);
     }
   }
-
+//<pre>{JSON.stringify(officials, null, 2)}</pre> heading alla kui vaja
   return (
     <Flex
       className="App"
@@ -54,7 +52,7 @@ export default function App() {
       margin="0 auto"
     >
       <Heading level={1}>Ametnike palgaandmed</Heading>
-
+      
       <Divider />
       <DataTable data={officials} />
 
