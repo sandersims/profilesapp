@@ -57,13 +57,13 @@ function IncomeData() {
     <table border="1" cellPadding="10">
       <thead>
         <tr>
-          <th>Institution</th>
-          <th>Structural Unit</th>
-          <th>Position</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Workload</th>
-          <th>Salary</th>
+          <th>Asutus</th>
+          <th>Struktuuriüksus</th>
+          <th>Ametikoht</th>
+          <th>Eesnimi</th>
+          <th>Perekonnanimi</th>
+          <th>Töökoormus</th>
+          <th>Palk</th>
         </tr>
       </thead>
       <tbody>
