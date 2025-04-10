@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Salary Data Viewer</title>
+  <title>Riigiametnike palgainfo</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -31,29 +31,29 @@
   </style>
 </head>
 <body>
-  <h1>Salary Data Viewer</h1>
+  <h1>Riigiametnike palgainfo</h1>
 
   <div id="controls">
-    <label for="sort-salary">Sort by Salary:</label>
+    <label for="sort-salary">Sorteeri palga järgi:</label>
     <select id="sort-salary" onchange="applyFilters()">
-      <option value="">-- No Sorting --</option>
-      <option value="asc">Low → High</option>
-      <option value="desc">High → Low</option>
+      <option value="">-- Sorteeri --</option>
+      <option value="asc">Väiksemast → Suuremani</option>
+      <option value="desc">Suuremast → Väiksemani</option>
     </select>
 
-    <label for="search-name">Search by Name:</label>
-    <input type="text" id="search-name" placeholder="Type a name..." oninput="applyFilters()" />
+    <label for="search-name">Otsi nime:</label>
+    <input type="text" id="search-name" placeholder="Otsi nime..." oninput="applyFilters()" />
   </div>
 
   <table id="salary-table">
     <thead>
       <tr>
-        <th>Institution</th>
-        <th>Structural Unit</th>
-        <th>Position</th>
-        <th>Name</th>
-        <th>Workload</th>
-        <th>Salary</th>
+        <th>Asutus</th>
+        <th>Struktuuriüksus</th>
+        <th>Ametikoht</th>
+        <th>Nimi</th>
+        <th>Töökoormus</th>
+        <th>Palk</th>
       </tr>
     </thead>
     <tbody id="table-body">
