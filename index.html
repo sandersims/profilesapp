@@ -1,116 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Riigiametnike palgainfo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    select, input {
-      margin-left: 10px;
-      padding: 4px 8px;
-    }
-    #controls {
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Riigiametnike palgainfo</h1>
-
-  <div id="controls">
-    <label for="sort-salary">Sorteeri palga järgi:</label>
-    <select id="sort-salary" onchange="applyFilters()">
-      <option value="">-- Sorteeri --</option>
-      <option value="asc">Väiksemast → Suuremani</option>
-      <option value="desc">Suuremast → Väiksemani</option>
-    </select>
-
-    <label for="search-name">Otsi nime:</label>
-    <input type="text" id="search-name" placeholder="Otsi nime..." oninput="applyFilters()" />
-  </div>
-
-  <table id="salary-table">
-    <thead>
-      <tr>
-        <th>Asutus</th>
-        <th>Struktuuriüksus</th>
-        <th>Ametikoht</th>
-        <th>Nimi</th>
-        <th>Töökoormus</th>
-        <th>Palk</th>
-      </tr>
-    </thead>
-    <tbody id="table-body">
-      
-    </tbody>
-  </table>
-
-  <script>
-    let allData = [];
-
-    async function loadData() {
-      try {
-        const response = await fetch("https://j12f80h5b9.execute-api.eu-north-1.amazonaws.com/dev/income");
-        allData = await response.json();
-        applyFilters();
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-        alert("Error loading data from the API.");
-      }
-    }
-
-    function renderTable(data) {
-      const tbody = document.getElementById("table-body");
-      tbody.innerHTML = "";
-      data.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${row.institution}</td>
-          <td>${row.structuralUnit}</td>
-          <td>${row.position}</td>
-          <td>${row.firstName} ${row.lastName}</td>
-          <td>${row.workload}</td>
-          <td>${row.salary}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function applyFilters() {
-      const sortOption = document.getElementById("sort-salary").value;
-      const searchQuery = document.getElementById("search-name").value.toLowerCase();
-
-      let filteredData = allData.filter(row => {
-        const fullName = `${row.firstName} ${row.lastName}`.toLowerCase();
-        return fullName.includes(searchQuery);
-      });
-
-      if (sortOption === "asc") {
-        filteredData.sort((a, b) => a.salary - b.salary);
-      } else if (sortOption === "desc") {
-        filteredData.sort((a, b) => b.salary - a.salary);
-      }
-
-      renderTable(filteredData);
-    }
-
-    window.onload = loadData;
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Riigiametnike palgainfo</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

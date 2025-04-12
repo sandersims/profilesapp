@@ -1,86 +1,112 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import {
-  Heading,
-  Flex,
-  View,
-  Grid,
-  Divider,
-} from "@aws-amplify/ui-react";
-import DataTable from "./DataTable";
+  Container,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Select,
+  MenuItem,
+  TextField,
+  InputLabel,
+  FormControl,
+  Box,
+} from '@mui/material';
 
 export default function App() {
-  const [userprofiles, setUserProfiles] = useState([]);
-  const [officials, setIncomeData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [allData, setAllData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [sortOption, setSortOption] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    //fetchUserProfile();
-    fetchIncomeData();
+    async function loadData() {
+      try {
+        const response = await fetch("https://j12f80h5b9.execute-api.eu-north-1.amazonaws.com/dev/income");
+        const text = await response.text();
+        const data = JSON.parse(text);
+        setAllData(data);
+        setFilteredData(data);
+      } catch (error) {
+        console.error("Fetch or JSON parse failed:", error);
+      }
+      
+    }
+    loadData();
   }, []);
 
-  /*async function fetchUserProfile() {
-    try {
-      const result = await client.graphql({ query: listUserProfiles });
-      const profiles = result.data?.listUserProfiles?.items || [];
-      console.log("Fetched UserProfiles:", profiles);
-      setUserProfiles(profiles);
-    } catch (error) {
-      console.error("Error fetching UserProfiles:", error);
-    }
-  }*/
+  useEffect(() => {
+    let filtered = allData.filter(row => {
+      const fullName = `${row.firstName} ${row.lastName}`.toLowerCase();
+      return fullName.includes(searchQuery.toLowerCase());
+    });
 
-  async function fetchIncomeData() {
-    try {
-      const response = await fetch("https://j12f80h5b9.execute-api.eu-north-1.amazonaws.com/dev/income");
-      const data = await response.json();
-      console.log("Fetched IncomeData:", data);
-      setIncomeData(data);
-    } catch (error) {
-      console.error("Error fetching IncomeData:", error);
-    } finally {
-      setLoading(false);
+    if (sortOption === 'asc') {
+      filtered.sort((a, b) => a.salary - b.salary);
+    } else if (sortOption === 'desc') {
+      filtered.sort((a, b) => b.salary - a.salary);
     }
-  }
-//<pre>{JSON.stringify(officials, null, 2)}</pre> heading alla kui vaja
+
+    setFilteredData(filtered);
+  }, [sortOption, searchQuery, allData]);
+
   return (
-    <Flex
-      className="App"
-      justifyContent="center"
-      alignItems="center"
-      direction="column"
-      width="70%"
-      margin="0 auto"
-    >
-      <Heading level={1}>Ametnike palgaandmed</Heading>
-      
-      <Divider />
-      <DataTable data={officials} />
-
-      <Grid
-        margin="3rem 0"
-        autoFlow="column"
-        justifyContent="center"
-        gap="2rem"
-        alignContent="center"
-      >
-        {userprofiles.map((userprofile) => (
-          <Flex
-            key={userprofile.id || userprofile.email}
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            gap="2rem"
-            border="1px solid #ccc"
-            padding="2rem"
-            borderRadius="5%"
-            className="box"
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        Riigiametnike palgainfo
+      </Typography>
+      <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>Sorteeri palga järgi</InputLabel>
+          <Select
+            value={sortOption}
+            label="Sorteeri palga järgi"
+            onChange={e => setSortOption(e.target.value)}
           >
-            <View>
-              <Heading level="3">{userprofile.email}</Heading>
-            </View>
-          </Flex>
-        ))}
-      </Grid>
-    </Flex>
+            <MenuItem value="">-- Sorteeri --</MenuItem>
+            <MenuItem value="asc">Väiksemast → Suuremani</MenuItem>
+            <MenuItem value="desc">Suuremast → Väiksemani</MenuItem>
+          </Select>
+        </FormControl>
+
+        <TextField
+          label="Otsi nime"
+          variant="outlined"
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+        />
+      </Box>
+
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead sx={{ backgroundColor: '#f2f2f2' }}>
+            <TableRow>
+              <TableCell>Asutus</TableCell>
+              <TableCell>Struktuuriüksus</TableCell>
+              <TableCell>Ametikoht</TableCell>
+              <TableCell>Nimi</TableCell>
+              <TableCell>Töökoormus</TableCell>
+              <TableCell>Palk</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredData.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell>{row.institution}</TableCell>
+                <TableCell>{row.structuralUnit}</TableCell>
+                <TableCell>{row.position}</TableCell>
+                <TableCell>{row.firstName} {row.lastName}</TableCell>
+                <TableCell>{row.workload}</TableCell>
+                <TableCell>{row.salary}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }
