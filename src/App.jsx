@@ -55,7 +55,7 @@ export default function App() {
   }, [sortOption, searchQuery, allData]);
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
+    <Container maxWidth="xl" sx={{ mt: 4 }}>
       <Typography variant="h4" gutterBottom>
         Riigiametnike palgainfo
       </Typography>
@@ -81,7 +81,7 @@ export default function App() {
         />
       </Box>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ width: 1 }}>
         <Table>
           <TableHead sx={{ backgroundColor: '#f2f2f2' }}>
             <TableRow>
