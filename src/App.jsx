@@ -29,6 +29,9 @@ export default function App() {
         const response = await fetch("https://j12f80h5b9.execute-api.eu-north-1.amazonaws.com/dev/income");
         const text = await response.text();
         const data = JSON.parse(text);
+        const sortedData = data.sort((a, b) =>
+          a.institution.localeCompare(b.institution)
+        );
         setAllData(data);
         setFilteredData(data);
       } catch (error) {
