@@ -86,15 +86,15 @@ export default function App() {
 
       <TableContainer component={Paper} sx={{ width: 1 }}>
         <Table>
-          <TableHead sx={{ backgroundColor: '#f2f2f2' }}>
-            <TableRow>
-              <TableCell>Asutus</TableCell>
-              <TableCell>Struktuuriüksus</TableCell>
-              <TableCell>Ametikoht</TableCell>
-              <TableCell>Nimi</TableCell>
-              <TableCell>Töökoormus</TableCell>
-              <TableCell>Palk</TableCell>
-            </TableRow>
+          <TableHead sx={{ backgroundColor: '#757ce8' }}>
+          <TableRow>
+            <TableCell sx={{ fontWeight: 'bold' }}>Asutus</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Struktuuriüksus</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Ametikoht</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Nimi</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Töökoormus</TableCell>
+            <TableCell sx={{ fontWeight: 'bold' }}>Palk</TableCell>
+          </TableRow>
           </TableHead>
           <TableBody>
             {filteredData.map((row, index) => (
